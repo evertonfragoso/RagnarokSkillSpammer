@@ -4,29 +4,96 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance
 
 
-if (!JEE_AhkIsAdmin())	{
+if (!JEE_AhkIsAdmin()) {
 	MsgBox, You need to run as Admin!
 	ExitApp
 }
 
-Gui, Add, GroupBox, x11 y2 w370 h50 , Add Click
 
-Gui, Add, CheckBox, x21 y22 w38 h24 vF1ClickStatus gSubmitClickStatus, F1
-Gui, Add, CheckBox, x61 y22 w38 h24 vF2ClickStatus gSubmitClickStatus, F2
-Gui, Add, CheckBox, x101 y22 w38 h24 vF3ClickStatus gSubmitClickStatus, F3
-Gui, Add, CheckBox, x141 y22 w38 h24 vF4ClickStatus gSubmitClickStatus, F4
-Gui, Add, CheckBox, x181 y22 w38 h24 vF5ClickStatus gSubmitClickStatus, F5
-Gui, Add, CheckBox, x221 y22 w38 h24 vF6ClickStatus gSubmitClickStatus, F6
-Gui, Add, CheckBox, x261 y22 w38 h24 vF7ClickStatus gSubmitClickStatus, F7
-Gui, Add, CheckBox, x301 y22 w38 h24 vF8ClickStatus gSubmitClickStatus, F8
-Gui, Add, CheckBox, x341 y22 w38 h24 vF9ClickStatus gSubmitClickStatus, F9
-; Generated using SmartGUI Creator 4.0
-Gui, Show, x404 y316 h67 w393, Ragnarok Skill Spammer
+Gui, Font, s11, Arial
+Gui, Font, s11, Tahoma  ; Preferred font.
 
-Gui, Add, Link, x341 y52 w40 h20 , <a href="https://github.com/Enkimaru/RagnarokSkillSpammer">v1.02</a>
+Gui, Show, x400 y300 h240 w490, RO Skill Spammer ; Window title
+
+
+; TODO: implement "," (comma) and "." (period) keys
+allKeys := ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"
+			,"1", "2", "3", "4", "5", "6", "7", "8", "9"
+			,"Q", "W", "E", "R", "T", "Y", "U", "I", "O"
+			,"A", "S", "D", "F", "G", "H", "J", "K", "L"
+			,"Z", "X", "C", "V", "B", "N", "M"] ;, ",", "."]
+
+
+functionKeysList := allKeys.Clone()
+functionKeysList.RemoveAt(10, allKeys.Length())
+
+numberKeysList := allKeys.Clone()
+numberKeysList.RemoveAt(19, numberKeysList.Length())
+numberKeysList.RemoveAt(0, 10)
+
+firstRowKeysList := allKeys.Clone()
+firstRowKeysList.RemoveAt(28, firstRowKeysList.Length())
+firstRowKeysList.RemoveAt(0, 19)
+
+secondRowKeysList := allKeys.Clone()
+secondRowKeysList.RemoveAt(37, secondRowKeysList.Length())
+secondRowKeysList.RemoveAt(0, 28)
+
+thirdRowKeysList := allKeys.Clone()
+thirdRowKeysList.RemoveAt(0, 37)
+
+
+startX := 20
+startY := 25
+
+Gui, Add, GroupBox, x10 y5 w470 h50 , Function Keys
+
+For Key, Value in functionKeysList {
+	Gui, Add, CheckBox, x%startX% y%startY% w50 h25 v%Value%ClickStatus gSubmitClickStatus, %Value%
+	startX := startX + 50
+}
+
+Gui, Add, GroupBox, x10 y60 w470 h160 , Alphanumeric
+
+startX := 20
+startY := 85
+
+For Key, Value in numberKeysList {
+	Gui, Add, CheckBox, x%startX% y%startY% w50 h25 v%Value%ClickStatus gSubmitClickStatus, %Value%
+	startX := startX + 50
+}
+
+startX := 20
+startY := 120
+
+For Key, Value in firstRowKeysList {
+	Gui, Add, CheckBox, x%startX% y%startY% w50 h25 v%Value%ClickStatus gSubmitClickStatus, %Value%
+	startX := startX + 50
+}
+
+startX := 20
+startY := 155
+
+For Key, Value in secondRowKeysList {
+	Gui, Add, CheckBox, x%startX% y%startY% w50 h25 v%Value%ClickStatus gSubmitClickStatus, %Value%
+	startX := startX + 50
+}
+
+startX := 20
+startY := 190
+
+For Key, Value in thirdRowKeysList {
+	Gui, Add, CheckBox, x%startX% y%startY% w50 h25 v%Value%ClickStatus gSubmitClickStatus, %Value%
+	startX := startX + 50
+}
+
+
+Gui, Font, s9,
+Gui, Add, Link, x450 y220 w50 h20 , <a href="https://github.com/evertonfragoso/RagnarokSkillSpammer">v2.0a</a>
+Gui, Font, s11,
 
 Gui, Submit, NoHide
-gosub, updateFKeys
+gosub, updateKeys
 
 Menu, Tray, Add, Restore, Restore
 Menu, Tray, default, Restore
@@ -35,22 +102,22 @@ return
 
 SubmitClickStatus:
 	Gui, Submit, NoHide
-	gosub, updateFKeys
+	gosub, updateKeys
 return
 
-updateFKeys:
+updateKeys:
 {
-	i := 1
-	Loop, 9 {
-		hotkey, f%i%, spam
-		i := i + 1
-	}	
+	For key, value in allKeys {
+		hotkey, %value%, spam
+	}
 }
 return
 
 spam:
 {
+	; TODO: implement optional/toggleable mouse click
 	#If WinActive("ahk_class Ragnarok")
+		OutputDebug, %a_thishotkey%
 		while getkeystate(a_thishotkey, "p") {
 				ControlSend, ahk_parent, {%a_thishotkey%}, ahk_class Ragnarok
 				if (%a_thishotkey%ClickStatus == true)
@@ -91,7 +158,7 @@ JEE_AhkIsAdmin()
 			if (vLastError = 1055)
 				vRet := 1
 		}
-		DllCall("advapi32\CloseServiceHandle", "Ptr",hSC)
+		DllCall("advapi32\CloseServiceHandle", "Ptr", hSC)
 	}
 	return vRet
 }

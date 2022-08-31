@@ -1,12 +1,13 @@
-## Ragnarok Skill Spammer (v1.02)
-###### This is an [AHK](https://www.autohotkey.com/ "AHK") Script for spamming the keys from F1~F9 on Ragnarok Online
-- You can toggle the click for each button
+# Ragnarok Skill Spammer (v2.0a)
+- This is an [AHK](https://www.autohotkey.com/ "AHK") Script for spamming the keys from `F1~F9`, `1~9`, `Q~O`, `A~L` and `Z~M` on Ragnarok Online, you can toggle the click for each button.
 
-###### Tested on iRO and bRO (with EAC)
+![image](image.png)
 
-You can just [download the .exe](https://github.com/Enkimaru/RagnarokSkillSpammer/releases/download/1.02/SkillSpammer.exe "download the .exe") or compile the .ahk yourself.
+**Tested on iRO and bRO (with EAC)!**
 
-#### If it helped, you can always leave a tip:
+## Download
 
-[PicPay](https://app.picpay.com/user/enkimaru "@enkimaru") or [Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=AEHXUEZ7TLWJW&currency_code=BRL&source=url "Paypal")
+- You can just [download the .exe](https://github.com/Enkimaru/RagnarokSkillSpammer/releases/download/2.0a/SkillSpammer.exe "download the .exe") or compile the `.ahk` yourself.
 
+### Original
+Original script by [Enkimaru](https://github.com/Enkimaru "Enkimaru") available at [Enkimaru/RagnarokSkillSpammer](https://github.com/Enkimaru/RagnarokSkillSpammer "Enkimaru/RagnarokSkillSpammer")
